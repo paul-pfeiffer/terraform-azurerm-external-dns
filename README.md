@@ -6,12 +6,16 @@ This module is published in the Terraform Module Registry https://registry.terra
 
 This guide follows the official documentation at https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure-private-dns.md
 
+
+This module is published in the Terraform Module Registry https://registry.terraform.io/modules/paul-pfeiffer/external-dns/azurerm/latest
+
 Pull Request are Welcome!
 
 ## Usage
 ```hcl
 module "external_dns" {
-  source                = "paul-pfeiffer/"
+  source                = "paul-pfeiffer/external-dns/azurerm"
+  version               = "0.0.1"
   azure_client_id       = azuread_service_principal.sp.application_id  # application (client) id of service principal
   azure_object_id       = azuread_service_principal.sp.object_id       # object id of service principal
   azure_client_secret   = azuread_service_principal_password.sp_pw.value # sp secret
@@ -20,8 +24,8 @@ module "external_dns" {
   resource_group_name   = "myrg" # 
   dns_provider          = "azure-private-dns" # currently only azure-private-dns supported
   set_permission        = true # if set to true permission for the service principal are set 
-                               # automatically. This includes reader permission on the resource 
-                               # group and private dns zone contributor permission on the private dns zone
+  # automatically. This includes reader permission on the resource 
+  # group and private dns zone contributor permission on the private dns zone
 
   domain_filters = [
     azurerm_private_dns_zone.pdns.name

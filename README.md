@@ -1,4 +1,4 @@
-# externalDns Azure (private) DNS Zone integration
+# externalDns Azure (public/private) DNS Zone integration
 Integration of externalDNS with Azure private DNS zones.
 Public Azure DNS Zones will be supported soon.
 

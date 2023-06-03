@@ -50,6 +50,7 @@ module "external_dns" {
   set_permission        = true
 
   domain_filters = [
-    azurerm_private_dns_zone.pdns.name
+    azurerm_private_dns_zone.pdns.name,
+    azurerm_private_dns_zone.pdns2.name
   ]
 }

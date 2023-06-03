@@ -5,6 +5,17 @@ resource "kubernetes_namespace" "namespace" {
   }
 }
 
+resource "helm_release" "nginx_controller" {
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  name       = "ingress-nginx"
+
+  set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
+}
+
 # example.com
 resource "azurerm_private_dns_zone" "pdns" {
   name                = "example.com"
@@ -33,16 +44,7 @@ resource "kubernetes_service_v1" "nginx" {
   }
 }
 
-resource "helm_release" "nginx_controller" {
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
-  name       = "ingress-nginx"
 
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
-}
 
 resource "kubernetes_service_v1" "nginx-svc" {
   metadata {
@@ -114,17 +116,6 @@ resource "kubernetes_service_v1" "nginx2" {
       "app" = "nginx2"
     }
     type = "LoadBalancer"
-  }
-}
-
-resource "helm_release" "nginx_controller2" {
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
-  name       = "ingress-nginx2"
-
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
   }
 }
 

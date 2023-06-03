@@ -20,12 +20,12 @@ variable "azure_subscription_id" {
 
 variable "resource_group_name" {
   description = "resource group that contain the dns zones"
-  type = string
+  type        = string
 }
 
 variable "set_permission" {
   description = "If set to true, the reader permission on the dns resource group as well as the private DNS Zone Contributor permission are set"
-  type = bool
+  type        = bool
 }
 
 variable "domain_filters" {
@@ -35,7 +35,7 @@ variable "domain_filters" {
 variable "dns_provider" {
   default = "azure-private-dns"
   validation {
-    condition = var.dns_provider == "azure-private-dns"
-    error_message = "Currently only azure-private-dns is supported"
+    condition     = var.dns_provider == "azure-private-dns" || var.dns_provider == "azure"
+    error_message = "Currently only azure-private-dns and azure is supported"
   }
 }

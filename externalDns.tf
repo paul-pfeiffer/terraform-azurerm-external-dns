@@ -1,9 +1,9 @@
 resource "helm_release" "external_dns" {
-  repository       = "https://marketplace.azurecr.io/helm/v1/repo"
+  repository       = "https://charts.bitnami.com/bitnami"
   chart            = "external-dns"
   name             = "external-dns"
   create_namespace = true
-
+  version          = "6.26.5"
   set {
     name  = "provider"
     value = var.dns_provider

@@ -39,15 +39,16 @@ resource "azuread_application" "sp_app" {
 }
 
 module "external_dns" {
-  source                = "../../"
-  azure_client_id       = azuread_service_principal.sp.application_id
-  azure_object_id       = azuread_service_principal.sp.object_id
-  azure_client_secret   = azuread_service_principal_password.sp_pw.value
-  azure_tenant_id       = data.azurerm_subscription.current.tenant_id
-  azure_subscription_id = data.azurerm_subscription.current.subscription_id
-  resource_group_name   = azurerm_resource_group.rg.name
-  dns_provider          = "azure-private-dns"
-  set_permission        = true
+  source                 = "../../"
+  azure_client_id        = azuread_service_principal.sp.application_id
+  azure_object_id        = azuread_service_principal.sp.object_id
+  azure_client_secret    = azuread_service_principal_password.sp_pw.value
+  azure_tenant_id        = data.azurerm_subscription.current.tenant_id
+  azure_subscription_id  = data.azurerm_subscription.current.subscription_id
+  resource_group_name    = azurerm_resource_group.rg.name
+  dns_provider           = "azure-private-dns"
+  set_permission         = true
+  external_dns_namespace = "external-dns"
 
   domain_filters = [
     azurerm_private_dns_zone.pdns.name,

@@ -39,3 +39,9 @@ variable "dns_provider" {
     error_message = "Currently only azure-private-dns and azure is supported"
   }
 }
+
+variable "external_dns_namespace" {
+  description = "Sets the namespace that will be used for external DNS, if the namespace doesnt exist, it will be created"
+  type = string
+  default = "default"
+}

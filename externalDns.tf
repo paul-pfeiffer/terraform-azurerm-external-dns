@@ -2,6 +2,7 @@ resource "helm_release" "external_dns" {
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = "external-dns"
   name             = "external-dns"
+  namespace        = "external-dns"
   create_namespace = true
   version          = "6.26.5"
   set {

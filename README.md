@@ -27,6 +27,16 @@ module "external_dns" {
   # automatically. This includes reader permission on the resource 
   # group and private dns zone contributor permission on the private dns zone
   external_dns_namespace = "external-dns" # defaults to 'default' namespace
+
+  resources_requests = {
+    cpu    = "100m"
+    memory = "128Mi"
+  }
+
+  resources_limits = {
+    cpu    = "500m"
+    memory = "256Mi"
+  }
   
   domain_filters = [
     azurerm_private_dns_zone.pdns.name

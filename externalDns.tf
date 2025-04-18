@@ -1,10 +1,12 @@
 resource "helm_release" "external_dns" {
-  repository       = "https://charts.bitnami.com/bitnami"
+  repository       = "oci://registry-1.docker.io/bitnamicharts"
   chart            = "external-dns"
   name             = "external-dns"
   namespace        = var.external_dns_namespace
-  create_namespace = true
-  version          = "6.26.5"
+  create_namespace = var.external_dns_create_namespace
+  version          = var.external_dns_version
+  
+
   set {
     name  = "provider"
     value = var.dns_provider
@@ -38,5 +40,37 @@ resource "helm_release" "external_dns" {
   set {
     name  = "domainFilters"
     value = "{${join(",", var.domain_filters)}}"
+  }
+
+  dynamic "set" {
+    for_each = var.resources_requests.cpu != null ? [1] : []
+    content {
+      name  = "resources.requests.cpu"
+      value = var.resources_requests.cpu
+    }
+  }
+
+  dynamic "set" {
+    for_each = var.resources_requests.memory != null ? [1] : []
+    content {
+      name  = "resources.requests.memory"
+      value = var.resources_requests.memory
+    }
+  }
+
+  dynamic "set" {
+    for_each = var.resources_limits.cpu != null ? [1] : []
+    content {
+      name  = "resources.limits.cpu"
+      value = var.resources_limits.cpu
+    }
+  }
+
+  dynamic "set" {
+    for_each = var.resources_limits.memory != null ? [1] : []
+    content {
+      name  = "resources.limits.memory"
+      value = var.resources_limits.memory
+    }
   }
 }
